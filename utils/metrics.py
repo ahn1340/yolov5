@@ -11,12 +11,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 
+#---------- edited by JINU ----------#
+def f2_score(P, R):
+    """
+    computes approximate f2 score metric, used for the COTS challenge.
+    This is NOT the exact f2 score, but it closely approximates it.
+    """
+    return 5 * ((P * R) / ((5 * P) * R)) 
 
 def fitness(x):
     # Model fitness as a weighted combination of metrics
-    w = [0.0, 0.0, 0.1, 0.9]  # weights for [P, R, mAP@0.5, mAP@0.5:0.95]
-    return (x[:, :4] * w).sum(1)
-
+    print("x shape: ", x.shape)  # (1, 4)
+    print("x: ", x)
+    P = x[0, 0]
+    R = x[0, 1]
+    score = f2_score(P, R)
+    print("f2: ", score)
+    return score
+    #w = [0.0, 0.0, 0.1, 0.9]  # weights for [P, R, mAP@0.5, mAP@0.5:0.95]
+    #return (x[:, :4] * w).sum(1)
+#---------- edited by JINU ----------#
 
 def ap_per_class(tp, conf, pred_cls, target_cls, plot=False, save_dir='.', names=(), eps=1e-16):
     """ Compute the average precision, given the recall and precision curves.
