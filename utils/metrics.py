@@ -17,12 +17,10 @@ def f2_score(P, R):
     computes approximate f2 score metric, used for the COTS challenge.
     This is NOT the exact f2 score, but it closely approximates it.
     """
-    return 5 * ((P * R) / ((5 * P) * R)) 
+    return 5 * ((P * R) / ((5 * P) + R)) 
 
 def fitness(x):
     # Model fitness as a weighted combination of metrics
-    print("x shape: ", x.shape)  # (1, 4)
-    print("x: ", x)
     P = x[0, 0]
     R = x[0, 1]
     score = f2_score(P, R)
